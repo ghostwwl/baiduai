@@ -66,7 +66,7 @@ func (this *AiFace) FaceDetect(imgbytes []byte) (map[string]interface{}) {
 
 	post_arg := map[string]interface{}{
 		"image": base64.StdEncoding.EncodeToString(imgbytes),
-		"max_face_num": "1",	// 最多处理人脸数目，默认值1
+		"max_face_num": "10",	// 最多处理人脸数目，默认值1
 		"face_fields":  "age,beauty,expression,faceshape,gender,glasses,landmark,race,qualities",
 		// 包括age、beauty、expression、faceshape、gender、glasses、landmark、race、qualities信息，逗号分隔，默认只返回人脸框、概率和旋转角度
 	}
@@ -103,7 +103,7 @@ func (this *AiFace) FaceMatch(img1bytes, img2bytes []byte) (map[string]interface
 	}
 
 	post_arg := map[string]interface{}{
-		"image": fmt.Sprintf("%s,%s", base64.StdEncoding.EncodeToString(img1bytes), base64.StdEncoding.EncodeToString(img2bytes)),
+		"images": fmt.Sprintf("%s,%s", base64.StdEncoding.EncodeToString(img1bytes), base64.StdEncoding.EncodeToString(img2bytes)),
 	}
 
 	real_uri := fmt.Sprintf("%s?access_token=%s", FACEMATCH_API_URI, this.access_token)
