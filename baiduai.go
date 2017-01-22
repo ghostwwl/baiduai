@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	BAIDU_AI_APPID = 9227723
-	BAIDU_AI_KEY  = "vbGvVZtiPds2FlX8qCq1LCMy"
-	BAIDU_AI_CRET = "pm5vTitFOAHXrgEz30tRy2X8ruRwlYUv"
+	BAIDU_AI_APPID = 0	//自己去申请呢	
+	BAIDU_AI_KEY  = "0"
+	BAIDU_AI_CRET = "0"
 
 	API_TIMEOUT = 120
 )
