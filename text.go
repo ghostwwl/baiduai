@@ -22,18 +22,16 @@ import (
 import (
 	"net/http"
 	"bytes"
-	"ghostlib"
 	"encoding/json"
-	"io/ioutil"
-	"fmt"
 	"errors"
-	"time"
 )
 
 
 type AiText struct {
 	AiClient
+	WordKindMap map[string]string
 }
+
 
 func NewText() *AiText {
 	c := new(AiText)
@@ -53,10 +51,49 @@ func NewText() *AiText {
 		8: "商业",
 		9: "房产",
 		10: "汽车",
-		11: "生活",
-		12: "购物",
+		11:	"生活",
+		12:	"购物",
 	}
-
+	c.WordKindMap = map[string]string{
+		"Dg" : "副语素",
+		"Ng" : "名语素",
+		"Tg" : "时语素",
+		"Vg" : "动语素",
+		"a" : "形容词",
+		"ad" : "副形词",
+		"an" : "名形词",
+		"b" : "区别词",
+		"c" : "连词",
+		"d" : "副词",
+		"e" : "叹词",
+		"f" : "方位词",
+		"g" : "语素",
+		"h" : "前接成分",
+		"i" : "成语",
+		"j" : "简称略语",
+		"k" : "后接成分",
+		"l" : "习用于",
+		"m" : "数词",
+		"n" : "名词",
+		"nr" : "人名",
+		"ns" : "地名",
+		"nt" : "机构团体",
+		"nz" : "其他专名",
+		"o" : "拟声词",
+		"p" : "介词",
+		"q" : "量词",
+		"r" : "代词",
+		"s" : "处所词",
+		"t" : "时间词",
+		"u" : "助词",
+		"v" : "动词",
+		"vd" : "副动词",
+		"vn" : "名动词",
+		"w" : "标点符号",
+		"x" : "非语素字",
+		"y" : "语气词",
+		"z" : "状态词",
+	}
 
 	return c
 }
@@ -103,6 +140,10 @@ func (this *AiText) GetCommentTag(intxt string) ([]interface{}) {
 	map_result := make(map[string]interface{})
 	json.Unmarshal([]byte(udata), &map_result)
 
+	error_msg, ok := map_result["error_msg"]; if ok {
+		panic(error_msg)
+	}
+
 	return map_result["tags"].([]interface{})
 }
 
@@ -147,6 +188,10 @@ func (this *AiText) SplitWords(intxt string) (map[string]interface{}) {
 	map_result := make(map[string]interface{})
 	json.Unmarshal([]byte(udata), &map_result)
 
+	error_msg, ok := map_result["error_msg"]; if ok {
+		panic(error_msg)
+	}
+
 	return map_result["scw_out"].(map[string]interface{})
 
 	// 结果里重要的内容说明
@@ -179,7 +224,6 @@ func (this *AiText) WordPos(intxt string) ([]interface{}) {
 	}
 
 	real_uri := fmt.Sprintf("%s?access_token=%s", WORDPOS_API_URI, this.access_token)
-
 	req, err := http.NewRequest("POST", real_uri, bytes.NewReader(post_json))
 	resp, _ := this.client.Do(req)
 
@@ -198,6 +242,10 @@ func (this *AiText) WordPos(intxt string) ([]interface{}) {
 	//fmt.Printf("%s", udata)
 	map_result := make(map[string]interface{})
 	json.Unmarshal([]byte(udata), &map_result)
+
+	error_msg, ok := map_result["error_msg"]; if ok {
+		panic(error_msg)
+	}
 
 	return map_result["result_out"].([]interface{})
 }
