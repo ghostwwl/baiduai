@@ -1,12 +1,12 @@
 # baiduai
 
-** 代码以GPL协议放除了 **
-** Author:ghostwwl@gmail.com **
-** ghostlib 库看 https://github.com/ghostwwl/go-code/blob/master/ghostlib.go 呢 **
-** 代码里我的app_key 和 app_cret 别用的毕竟免费有限制 **
-** go没咋学 边看手册边写 有不对的 请直接邮件 **
+### 代码以GPL协议放除了 
+### Author:ghostwwl@gmail.com 
+### ghostlib 库看 https://github.com/ghostwwl/go-code/blob/master/ghostlib.go 呢 
+### 代码里我的app_key 和 app_cret 别用的毕竟免费有限制 
+### go没咋学 边看手册边写 有不对的 请直接邮件 
 
-** 使用说明呢:
+### 使用说明呢:
 
 ```
 package main
