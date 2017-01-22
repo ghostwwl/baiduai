@@ -11,6 +11,7 @@
 ```
 package main
 
+
 import (
 	"ghostlib"
 	"fmt"
@@ -118,13 +119,61 @@ func test_wordpos(){
 	}
 }
 
+func test_ocridcard(){
+	engine := baiduai.NewOcr()
+	//r, err := ioutil.ReadFile("/data1/xx.jpg")
+	r, err := ioutil.ReadFile("/data1/xxxx.JPG")
+	if nil != err{
+		panic(err)
+	}
+	x := engine.OcrIdCard(r, true)
+	//fmt.Printf("%v\n", x)
+	result := x["words_result"].(map[string]interface{})
+	for kk, vv := range(result){
+		fmt.Printf("--------\n%v:%v\n", kk, vv.(map[string]interface{})["words"])
+	}
+}
+
+func test_ocrbankcard() {
+	engine := baiduai.NewOcr()
+	r, err := ioutil.ReadFile("/data1/b2.jpg")
+	if nil != err{
+		panic(err)
+	}
+	x := engine.OcrBankCard(r)
+	fmt.Printf("%v\n", x)
+	result := x["result"].(map[string]interface{})
+	for kk, vv := range(result){
+		fmt.Printf("--------\n%v:%v\n", kk, vv)
+	}
+}
+
+func test_ocrgeneral(){
+	engine := baiduai.NewOcr()
+	r, err := ioutil.ReadFile("/data1/11.jpg")
+	if nil != err{
+		panic(err)
+	}
+	x := engine.OcrGeneral(r)
+	fmt.Printf("%v\n", x)
+	result := x["words_result"].([]interface{})
+	for kk, vv := range(result){
+		fmt.Printf("--------\n%v:%v\n", kk, vv.(map[string]interface{})["words"])
+	}
+}
+
 func main(){
 	//test_text2voice()
 	//test_voice2txt()
-	test_ctag()
+	//test_ctag()
 	//test_splitword()
 	//test_wordpos()
+
+	test_ocridcard()
+	//test_ocrbankcard()
+	//test_ocrgeneral()
 }
+
 
 ```
 
