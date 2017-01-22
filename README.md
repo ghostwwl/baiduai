@@ -180,7 +180,7 @@ func main(){
 
 输出如下:
 
-'''
+```
 /usr/local/go/bin/go run /data/ghostwwl/project/Go/src/test_bdai.go
 word: 王辉
 type: nr
@@ -320,7 +320,7 @@ kind: 动词
 -------
 
 Process finished with exit code 0
-'''
+```
 
 
 >
