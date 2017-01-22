@@ -8,9 +8,9 @@ import (
 )
 
 const (
-	BAIDU_AI_APPID = 0	//自己去申请呢	
-	BAIDU_AI_KEY  = "0"
-	BAIDU_AI_CRET = "0"
+	BAIDU_AI_APPID = 9227723
+	BAIDU_AI_KEY  = "vbGvVZtiPds2FlX8qCq1LCMy"
+	BAIDU_AI_CRET = "pm5vTitFOAHXrgEz30tRy2X8ruRwlYUv"
 
 	API_TIMEOUT = 120
 )
@@ -28,6 +28,16 @@ const (
 	// 语音相关API
 	TXT2VOICE_API_URI = "http://tsn.baidu.com/text2audio" // 语音合成
 	VOICE2TXT_API_URI = "http://vop.baidu.com/server_api"  // 语音识别
+
+	// OCR相关API
+	IDCARD_API_URI = "https://aip.baidubce.com/rest/2.0/ocr/v1/idcard"
+	BANKCARD_API_URI = "https://aip.baidubce.com/rest/2.0/ocr/v1/bankcard"
+	GENERALOCR_API_URI = "https://aip.baidubce.com/rest/2.0/ocr/v1/general"
+
+	// 人脸检测相关API
+	FACEDETECT_API_URI = "https://aip.baidubce.com/rest/2.0/face/v1/detect"
+	FACEMATCH_API_URI = "https://aip.baidubce.com/rest/2.0/faceverify/v1/match"
+
 
 )
 
