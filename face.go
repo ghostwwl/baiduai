@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"ghostlib"
 	"encoding/base64"
+	"strings"
 )
 
 
@@ -93,7 +94,7 @@ func (this *AiFace) FaceDetect(imgbytes []byte) (map[string]interface{}) {
 /**
  * 人脸比对
  */
-func (this *AiFace) FaceMatch(img1bytes, img2bytes []byte) (map[string]interface{}) {
+func (this *AiFace) FaceMatch(imgbytes... []byte) (map[string]interface{}) {
 	// 真实使用时这里要判断过期时间 避免重复获取token
 	if this.access_token == "" {
 		doflag, _ := this.getToken()
@@ -102,8 +103,18 @@ func (this *AiFace) FaceMatch(img1bytes, img2bytes []byte) (map[string]interface
 		}
 	}
 
+	if len(imgbytes) < 2 {
+		panic("最少需要两张图比对")
+	}
+
+	var images_blist []string
+	for _, ibyte := range(imgbytes) {
+		images_blist = append(images_blist, base64.StdEncoding.EncodeToString(ibyte))
+	}
+
+
 	post_arg := map[string]interface{}{
-		"images": fmt.Sprintf("%s,%s", base64.StdEncoding.EncodeToString(img1bytes), base64.StdEncoding.EncodeToString(img2bytes)),
+		"images": strings.Join(images_blist, ","),
 	}
 
 	real_uri := fmt.Sprintf("%s?access_token=%s", FACEMATCH_API_URI, this.access_token)
