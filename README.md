@@ -70,9 +70,9 @@ func test_ctag(){
 	fmt.Printf("\n---------\nsrc:%s\n------\n", T)
 	for _, r := range(x) {
 		r := r.(map[string]interface{})
-			fmt.Printf("abstract: %s\n", r["abstract"].(string))
-			fmt.Printf("fea: %s\n", r["fea"].(string))
-			fmt.Printf("adj: %s\n-------\n", r["adj"].(string))
+		fmt.Printf("abstract: %s\n", r["abstract"].(string))
+		fmt.Printf("fea: %s\n", r["fea"].(string))
+		fmt.Printf("adj: %s\n-------\n", r["adj"].(string))
 	}
 }
 
@@ -123,8 +123,8 @@ func test_wordpos(){
 
 func test_ocridcard(){
 	engine := baiduai.NewOcr()
-	//r, err := ioutil.ReadFile("/data1/xx.jpg")
-	r, err := ioutil.ReadFile("/data1/xx.jpg")
+	//r, err := ioutil.ReadFile("/data1/s2.jpg")
+	r, err := ioutil.ReadFile("/data1/s1.png")
 	if nil != err{
 		panic(err)
 	}
@@ -164,17 +164,62 @@ func test_ocrgeneral(){
 	}
 }
 
+func test_facedetect(){
+	engine := baiduai.NewFace()
+	r, err := ioutil.ReadFile("/data1/f1.jpg")
+	if nil != err{
+		panic(err)
+	}
+	x := engine.FaceDetect(r)
+	fmt.Printf("%v\n", x)
+}
+
+func test_facematch(){
+	engine := baiduai.NewFace()
+	r, err := ioutil.ReadFile("/data1/f2.jpg")
+	if nil != err{
+		panic(err)
+	}
+	r1, err := ioutil.ReadFile("/data1/f3.jpg")
+	if nil != err{
+		panic(err)
+	}
+	r2, err := ioutil.ReadFile("/data1/f4.jpg")
+	if nil != err{
+		panic(err)
+	}
+	r3, err := ioutil.ReadFile("/data1/f5.jpg")
+	if nil != err{
+		panic(err)
+	}
+	x := engine.FaceMatch(r, r1, r2, r3)
+	//fmt.Printf("%v\n", x)
+
+	results := x["results"].([]interface{})
+	for i, r := range(results) {
+		r := r.(map[string]interface{})
+		fmt.Printf("\n--------第%v组比对----------\n", i)
+		index_i := ghostlib.ToInt64(r["index_i"]) + 1
+		index_j := ghostlib.ToInt64(r["index_j"]) + 1
+		fmt.Printf("img[%v]与img[%v] 相似度:%v%%\n", index_i, index_j, r["score"])
+	}
+}
+
 func main(){
 	//test_text2voice()
 	//test_voice2txt()
 	//test_ctag()
 	//test_splitword()
-	test_wordpos()
+	//test_wordpos()
 
 	//test_ocridcard()
 	//test_ocrbankcard()
 	//test_ocrgeneral()
+
+	//test_facedetect()
+	test_facematch()
 }
+
 
 ```
 
@@ -182,144 +227,27 @@ func main(){
 
 ```
 /usr/local/go/bin/go run /data/ghostwwl/project/Go/src/test_bdai.go
-word: 王辉
-type: nr
-kind: 人名
--------
-word: 中国美术家协会
-type: nt
-kind: 机构团体
--------
-word: 会员
-type: n
-kind: 名词
--------
-word: 1980年
-type: t
-kind: 时间词
--------
-word: 生于
-type: v
-kind: 动词
--------
-word: 湖北
-type: ns
-kind: 地名
--------
-word: 2003年
-type: t
-kind: 时间词
--------
-word: 毕业
-type: v
-kind: 动词
--------
-word: 于
-type: p
-kind: 介词
--------
-word: 湖北美术学院
-type: nt
-kind: 机构团体
--------
-word: 中国画
-type: nz
-kind: 其他专名
--------
-word: 专业
-type: n
-kind: 名词
--------
-word: 学士学位
-type: n
-kind: 名词
--------
-word: 2006年
-type: t
-kind: 时间词
--------
-word: 毕业
-type: v
-kind: 动词
--------
-word: 于
-type: p
-kind: 介词
--------
-word: 广西艺术学院
-type: nt
-kind: 机构团体
--------
-word: 中国画
-type: nz
-kind: 其他专名
--------
-word: 专业
-type: n
-kind: 名词
--------
-word: 硕士学位
-type: n
-kind: 名词
--------
-word: 现任
-type: v
-kind: 动词
--------
-word: 职
-type: n
-kind: 名词
--------
-word: 于
-type: p
-kind: 介词
--------
-word: 四川绵阳师范学院美术学院
-type: nt
-kind: 机构团体
--------
-word: 中国画
-type: nz
-kind: 其他专名
--------
-word: 教师
-type: n
-kind: 名词
--------
-word: 作品
-type: n
-kind: 名词
--------
-word: 多次
-type: m
-kind: 数词
--------
-word: 入选
-type: v
-kind: 动词
--------
-word: 全国性
-type: n
-kind: 名词
--------
-word: 学术
-type: n
-kind: 名词
--------
-word: 展览
-type: vn
-kind: 名动词
--------
-word: 并
-type: c
-kind: 连词
--------
-word: 获奖
-type: v
-kind: 动词
--------
+
+--------第0组比对----------
+img[1]与img[2] 相似度:83.063133239746%
+
+--------第1组比对----------
+img[1]与img[3] 相似度:94.308540344238%
+
+--------第2组比对----------
+img[1]与img[4] 相似度:74.360145568848%
+
+--------第3组比对----------
+img[2]与img[3] 相似度:90.899742126465%
+
+--------第4组比对----------
+img[2]与img[4] 相似度:81.979782104492%
+
+--------第5组比对----------
+img[3]与img[4] 相似度:86.821075439453%
 
 Process finished with exit code 0
+
 ```
 
 
