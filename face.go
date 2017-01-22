@@ -135,3 +135,38 @@ func (this *AiFace) FaceMatch(imgbytes... []byte) (map[string]interface{}) {
 
 	return map_result
 }
+
+/**
+ * 黄反识别
+ */
+func (this *AiFace) AntiPorn(imgbytes []byte) (map[string]interface{}) {
+	// 真实使用时这里要判断过期时间 避免重复获取token
+	if this.access_token == "" {
+		doflag, _ := this.getToken()
+		if !doflag {
+			panic("获取access token 失败")
+		}
+	}
+
+	post_arg := map[string]interface{}{
+		"image": base64.StdEncoding.EncodeToString(imgbytes),
+	}
+
+	real_uri := fmt.Sprintf("%s?access_token=%s", ANTIPORN_API_URI, this.access_token)
+	resp, _ := this.client.PostForm(real_uri, ghostlib.InitPostData(post_arg))
+
+	defer resp.Body.Close()
+	data, err := ioutil.ReadAll(resp.Body)
+	if nil != err {
+		panic(err)
+	}
+
+	map_result := make(map[string]interface{})
+	json.Unmarshal(data, &map_result)
+
+	error_msg, ok := map_result["error_msg"]; if ok {
+		panic(error_msg)
+	}
+
+	return map_result
+}
