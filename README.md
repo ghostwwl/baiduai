@@ -1,10 +1,10 @@
 # baiduai
 
-### 代码以GPL协议放出 
-### Author:ghostwwl@gmail.com 
-### ghostlib 库看 https://github.com/ghostwwl/go-code/blob/master/ghostlib.go 呢 
-### 代码里我的app_key 和 app_cret 别用的毕竟免费有限制 
-### go没咋学 边看手册边写 有不对的 请直接邮件 
+- 代码以GPL协议放出 
+- Author:ghostwwl@gmail.com 
+- ghostlib 库看 https://github.com/ghostwwl/go-code/blob/master/ghostlib.go 呢 
+- 代码里我的app_key 和 app_cret 别用的毕竟免费有限制 
+- go没咋学 边看手册边写 有不对的 请直接邮件 
 
 ### 使用说明呢:
 
@@ -19,6 +19,9 @@ import (
 	"baiduai"
 )
 
+/**
+ * 语音合成
+ */
 func test_text2voice(){
 	voice := baiduai.NewVoice()
 	T := `
@@ -44,7 +47,9 @@ func test_text2voice(){
 	}
 }
 
-
+/**
+ * 语音识别
+ */
 func test_voice2txt(){
 	engine := baiduai.NewVoice()
 	// bd_voice.wav 输入的是 单声道16k采样
@@ -60,6 +65,9 @@ func test_voice2txt(){
 	fmt.Printf("%v\n", txtresult)
 }
 
+/**
+ * 评论观点抽取 或 情感识别  垃圾 很容易没结果
+ */
 func test_ctag(){
 	T := "京东商城的商品质量很好,价格也非常便宜,京东商城的快递很迅速,快递员服务态度也非常好,在京东商城购物省时省力省钱"
 	T = "辛苦快递小哥了！抢购的！相信京东没喝应该是正品！个人觉得盒子好小，毕竟只有400Ml幸好有纸质包装袋，可以装一下，才敢送出手！不管怎么说这个牌子广告响！值吧！就是赠品一个都没送，还买了3箱"
@@ -76,6 +84,9 @@ func test_ctag(){
 	}
 }
 
+/**
+ * 分词
+ */
 func test_splitword(){
 	T := `
 王辉。中国美术家协会会员。1980年生于湖北。2003年毕业于湖北美术学院。
@@ -101,6 +112,9 @@ func test_splitword(){
 
 }
 
+/**
+ * 词性标注
+ */
 func test_wordpos(){
 	T := `
 王辉。中国美术家协会会员。1980年生于湖北。2003年毕业于湖北美术学院。
@@ -121,6 +135,9 @@ func test_wordpos(){
 	}
 }
 
+/**
+ * 身份证识别
+ */
 func test_ocridcard(){
 	engine := baiduai.NewOcr()
 	//r, err := ioutil.ReadFile("/data1/s2.jpg")
@@ -136,6 +153,9 @@ func test_ocridcard(){
 	}
 }
 
+/**
+ * 银行卡识别
+ */
 func test_ocrbankcard() {
 	engine := baiduai.NewOcr()
 	r, err := ioutil.ReadFile("/data1/b2.jpg")
@@ -150,6 +170,9 @@ func test_ocrbankcard() {
 	}
 }
 
+/**
+ * 文字识别
+ */
 func test_ocrgeneral(){
 	engine := baiduai.NewOcr()
 	r, err := ioutil.ReadFile("/data1/11.jpg")
@@ -157,13 +180,16 @@ func test_ocrgeneral(){
 		panic(err)
 	}
 	x := engine.OcrGeneral(r)
-	fmt.Printf("%v\n", x)
+	//fmt.Printf("%v\n", x)
 	result := x["words_result"].([]interface{})
 	for kk, vv := range(result){
 		fmt.Printf("--------\n%v:%v\n", kk, vv.(map[string]interface{})["words"])
 	}
 }
 
+/**
+ * 人脸检测
+ */
 func test_facedetect(){
 	engine := baiduai.NewFace()
 	r, err := ioutil.ReadFile("/data1/f1.jpg")
@@ -174,6 +200,9 @@ func test_facedetect(){
 	fmt.Printf("%v\n", x)
 }
 
+/**
+ * 人脸相似度匹配
+ */
 func test_facematch(){
 	engine := baiduai.NewFace()
 	r, err := ioutil.ReadFile("/data1/f2.jpg")
@@ -219,6 +248,7 @@ func main(){
 	//test_facedetect()
 	test_facematch()
 }
+
 
 
 ```
