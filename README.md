@@ -114,7 +114,9 @@ func test_wordpos(){
 		// 非符号的词
 		if "w" != r["type"].(string) {
 			fmt.Printf("word: %s\n", r["word"].(string))
-			fmt.Printf("type: %s\n-------\n", r["type"].(string))
+			fmt.Printf("type: %s\n", r["type"].(string))
+			fmt.Printf("kind: %s\n-------\n", engine.GetWordKind(r["type"].(string)))
+
 		}
 	}
 }
@@ -122,7 +124,7 @@ func test_wordpos(){
 func test_ocridcard(){
 	engine := baiduai.NewOcr()
 	//r, err := ioutil.ReadFile("/data1/xx.jpg")
-	r, err := ioutil.ReadFile("/data1/xxxx.JPG")
+	r, err := ioutil.ReadFile("/data1/xx.jpg")
 	if nil != err{
 		panic(err)
 	}
@@ -167,15 +169,158 @@ func main(){
 	//test_voice2txt()
 	//test_ctag()
 	//test_splitword()
-	//test_wordpos()
+	test_wordpos()
 
-	test_ocridcard()
+	//test_ocridcard()
 	//test_ocrbankcard()
 	//test_ocrgeneral()
 }
 
-
 ```
+
+输出如下:
+
+'''
+/usr/local/go/bin/go run /data/ghostwwl/project/Go/src/test_bdai.go
+word: 王辉
+type: nr
+kind: 人名
+-------
+word: 中国美术家协会
+type: nt
+kind: 机构团体
+-------
+word: 会员
+type: n
+kind: 名词
+-------
+word: 1980年
+type: t
+kind: 时间词
+-------
+word: 生于
+type: v
+kind: 动词
+-------
+word: 湖北
+type: ns
+kind: 地名
+-------
+word: 2003年
+type: t
+kind: 时间词
+-------
+word: 毕业
+type: v
+kind: 动词
+-------
+word: 于
+type: p
+kind: 介词
+-------
+word: 湖北美术学院
+type: nt
+kind: 机构团体
+-------
+word: 中国画
+type: nz
+kind: 其他专名
+-------
+word: 专业
+type: n
+kind: 名词
+-------
+word: 学士学位
+type: n
+kind: 名词
+-------
+word: 2006年
+type: t
+kind: 时间词
+-------
+word: 毕业
+type: v
+kind: 动词
+-------
+word: 于
+type: p
+kind: 介词
+-------
+word: 广西艺术学院
+type: nt
+kind: 机构团体
+-------
+word: 中国画
+type: nz
+kind: 其他专名
+-------
+word: 专业
+type: n
+kind: 名词
+-------
+word: 硕士学位
+type: n
+kind: 名词
+-------
+word: 现任
+type: v
+kind: 动词
+-------
+word: 职
+type: n
+kind: 名词
+-------
+word: 于
+type: p
+kind: 介词
+-------
+word: 四川绵阳师范学院美术学院
+type: nt
+kind: 机构团体
+-------
+word: 中国画
+type: nz
+kind: 其他专名
+-------
+word: 教师
+type: n
+kind: 名词
+-------
+word: 作品
+type: n
+kind: 名词
+-------
+word: 多次
+type: m
+kind: 数词
+-------
+word: 入选
+type: v
+kind: 动词
+-------
+word: 全国性
+type: n
+kind: 名词
+-------
+word: 学术
+type: n
+kind: 名词
+-------
+word: 展览
+type: vn
+kind: 名动词
+-------
+word: 并
+type: c
+kind: 连词
+-------
+word: 获奖
+type: v
+kind: 动词
+-------
+
+Process finished with exit code 0
+'''
 
 
 >
