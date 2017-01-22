@@ -38,6 +38,8 @@ const (
 	FACEDETECT_API_URI = "https://aip.baidubce.com/rest/2.0/face/v1/detect"
 	FACEMATCH_API_URI = "https://aip.baidubce.com/rest/2.0/faceverify/v1/match"
 
+	// 黄反识别
+	ANTIPORN_API_URI = "https://aip.baidubce.com/rest/2.0/antiporn/v1/detect"
 
 )
 
