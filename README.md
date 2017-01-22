@@ -1,6 +1,6 @@
 # baiduai
 
-### 代码以GPL协议放除了 
+### 代码以GPL协议放出 
 ### Author:ghostwwl@gmail.com 
 ### ghostlib 库看 https://github.com/ghostwwl/go-code/blob/master/ghostlib.go 呢 
 ### 代码里我的app_key 和 app_cret 别用的毕竟免费有限制 
