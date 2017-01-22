@@ -198,6 +198,7 @@ func test_facedetect(){
 	}
 	x := engine.FaceDetect(r)
 	fmt.Printf("%v\n", x)
+
 }
 
 /**
@@ -234,6 +235,38 @@ func test_facematch(){
 	}
 }
 
+/**
+ * 色情识别
+ */
+func test_antporn(){
+	engine := baiduai.NewFace()
+	//r, err := ioutil.ReadFile("/data1/s1.jpg")
+	r, err := ioutil.ReadFile("/data1/s9.jpg")
+	if nil != err{
+		panic(err)
+	}
+	x := engine.AntiPorn(r)
+
+	var max_class = ""
+	var max_prob float64 = 0
+
+	for _, r := range(x["result"].([]interface{})){
+		r := r.(map[string]interface{})
+		cprob := r["probability"].(float64)
+		if cprob > max_prob {
+			max_prob = cprob
+			max_class = r["class_name"].(string)
+		}
+
+		fmt.Printf("\n-------------\n分类: %v\n", r["class_name"])
+		fmt.Printf("置信度: %v\n", r["probability"])
+	}
+
+	fmt.Printf("\n********结果*******\n")
+	fmt.Printf("这是 [ %v ] 图片的可能性为 [ %v%% ]", max_class, max_prob*100)
+
+}
+
 func main(){
 	//test_text2voice()
 	//test_voice2txt()
@@ -247,8 +280,9 @@ func main(){
 
 	//test_facedetect()
 	test_facematch()
-}
 
+	//test_antporn()
+}
 
 
 ```
