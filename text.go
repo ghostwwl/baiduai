@@ -53,8 +53,8 @@ func NewText() *AiText {
 		8: "商业",
 		9: "房产",
 		10: "汽车",
-		11:	"生活",
-		12:	"购物",
+		11: "生活",
+		12: "购物",
 	}
 
 
@@ -86,7 +86,6 @@ func (this *AiText) GetCommentTag(intxt string) ([]interface{}) {
 	real_uri := fmt.Sprintf("%s?access_token=%s", COMTAG_API_URI, this.access_token)
 
 	req, err := http.NewRequest("POST", real_uri, bytes.NewReader(post_json))
-	//req.Header.Add("User-Agent", "baidu-aip-php-sdk-1.0.0.1")
 	resp, _ := this.client.Do(req)
 
 	defer resp.Body.Close()
@@ -130,7 +129,6 @@ func (this *AiText) SplitWords(intxt string) (map[string]interface{}) {
 	real_uri := fmt.Sprintf("%s?access_token=%s", SEG_API_URI, this.access_token)
 
 	req, err := http.NewRequest("POST", real_uri, bytes.NewReader(post_json))
-	//req.Header.Add("User-Agent", "baidu-aip-php-sdk-1.0.0.1")
 	resp, _ := this.client.Do(req)
 
 	defer resp.Body.Close()
@@ -183,7 +181,6 @@ func (this *AiText) WordPos(intxt string) ([]interface{}) {
 	real_uri := fmt.Sprintf("%s?access_token=%s", WORDPOS_API_URI, this.access_token)
 
 	req, err := http.NewRequest("POST", real_uri, bytes.NewReader(post_json))
-	//req.Header.Add("User-Agent", "baidu-aip-php-sdk-1.0.0.1")
 	resp, _ := this.client.Do(req)
 
 	defer resp.Body.Close()
