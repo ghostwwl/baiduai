@@ -139,19 +139,20 @@ func main(){
 --------------------------------
 
 **免费接口每天有调用次数限制**
->
+
+
 | 服务名称 | 请求地址 | 限额 | QPS限制 | 服务方式 |
 |--|--|--|--|--|
-|语音识别 | http://vop.baidu.com/server_api|50000次/天|免费服务不保证并发|SDK、API|
-|语音合成 | http://tsn.baidu.com/text2audio|200000次/天|免费服务不保证并发|SDK、API|
-|身份证识别|https://aip.baidubce.com/rest/2.0/ocr/v1/idcard|500次/天|免费服务不保证并发|SDK、API|
-|银行卡识别|https://aip.baidubce.com/rest/2.0/ocr/v1/bankcard|500次/天|免费服务不保证并发|SDK、API|
-|通用文字识别|https://aip.baidubce.com/rest/2.0/ocr/v1/general|500次/天|免费服务不保证并发|SDK、API|
-|人脸检测|https://aip.baidubce.com/rest/2.0/face/v1/detect|1000次/天|免费服务不保证并发|SDK、API|
-|人脸对比|https://aip.baidubce.com/rest/2.0/faceverify/v1/match|1000次/天|免费服务不保证并发|SDK、API|
-|中文分词|https://aip.baidubce.com/rpc/2.0/nlp/v1/wordseg|1000次/天|免费服务不保证并发|SDK、API|
-|中文词向量表示|https://aip.baidubce.com/rpc/2.0/nlp/v1/wordembedding|1000次/天|免费服务不保证并发|SDK、API|
-|短文本相似度|https://aip.baidubce.com/rpc/2.0/nlp/v1/simnet|1000次/天|免费服务不保证并发|SDK、API|
+|语音识别 | http://vop.baidu.com/server_api |50000次/天|免费服务不保证并发|SDK、API|
+|语音合成 | http://tsn.baidu.com/text2audio |200000次/天|免费服务不保证并发|SDK、API|
+|身份证识别|https://aip.baidubce.com/rest/2.0/ocr/v1/idcard |500次/天|免费服务不保证并发|SDK、API|
+|银行卡识别|https://aip.baidubce.com/rest/2.0/ocr/v1/bankcard |500次/天|免费服务不保证并发|SDK、API|
+|通用文字识别|https://aip.baidubce.com/rest/2.0/ocr/v1/general |500次/天|免费服务不保证并发|SDK、API|
+|人脸检测|https://aip.baidubce.com/rest/2.0/face/v1/detect |1000次/天|免费服务不保证并发|SDK、API|
+|人脸对比|https://aip.baidubce.com/rest/2.0/faceverify/v1/match |1000次/天|免费服务不保证并发|SDK、API|
+|中文分词|https://aip.baidubce.com/rpc/2.0/nlp/v1/wordseg |1000次/天|免费服务不保证并发|SDK、API|
+|中文词向量表示|https://aip.baidubce.com/rpc/2.0/nlp/v1/wordembedding | 1000次/天|免费服务不保证并发|SDK、API|
+|短文本相似度|https://aip.baidubce.com/rpc/2.0/nlp/v1/simnet | 1000次/天|免费服务不保证并发|SDK、API|
 |中文DNN语言模型|https://aip.baidubce.com/rpc/2.0/nlp/v1/dnnlm_cn|1000次/天|免费服务不保证并发|SDK、API|
 |评论观点抽取|https://aip.baidubce.com/rpc/2.0/nlp/v1/comment_tag|1000次/天|免费服务不保证并发|SDK、API|
 |词性标注|https://aip.baidubce.com/rpc/2.0/nlp/v1/wordpos|1000次/天|免费服务不保证并发|SDK、API|
