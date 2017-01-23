@@ -3,7 +3,6 @@ package baiduai
 import (
 	"net/http"
 	"time"
-	"fmt"
 	"encoding/json"
 	"io/ioutil"
 	"ghostlib"
@@ -57,14 +56,6 @@ func NewFace() *AiFace {
  * 人脸检测
  */
 func (this *AiFace) FaceDetect(imgbytes []byte) (map[string]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	post_arg := map[string]interface{}{
 		"image": base64.StdEncoding.EncodeToString(imgbytes),
 		"max_face_num": "10",	// 最多处理人脸数目，默认值1
@@ -72,10 +63,9 @@ func (this *AiFace) FaceDetect(imgbytes []byte) (map[string]interface{}) {
 		// 包括age、beauty、expression、faceshape、gender、glasses、landmark、race、qualities信息，逗号分隔，默认只返回人脸框、概率和旋转角度
 	}
 
-	real_uri := fmt.Sprintf("%s?access_token=%s", FACEDETECT_API_URI, this.access_token)
-	resp, _ := this.client.PostForm(real_uri, ghostlib.InitPostData(post_arg))
-
+	resp, _ := this.client.PostForm(this.getInterFaceUri(FACEDETECT_API_URI), ghostlib.InitPostData(post_arg))
 	defer resp.Body.Close()
+
 	data, err := ioutil.ReadAll(resp.Body)
 	if nil != err {
 		panic(err)
@@ -95,14 +85,6 @@ func (this *AiFace) FaceDetect(imgbytes []byte) (map[string]interface{}) {
  * 人脸比对
  */
 func (this *AiFace) FaceMatch(imgbytes... []byte) (map[string]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	if len(imgbytes) < 2 {
 		panic("最少需要两张图比对")
 	}
@@ -117,10 +99,9 @@ func (this *AiFace) FaceMatch(imgbytes... []byte) (map[string]interface{}) {
 		"images": strings.Join(images_blist, ","),
 	}
 
-	real_uri := fmt.Sprintf("%s?access_token=%s", FACEMATCH_API_URI, this.access_token)
-	resp, _ := this.client.PostForm(real_uri, ghostlib.InitPostData(post_arg))
-
+	resp, _ := this.client.PostForm(this.getInterFaceUri(FACEMATCH_API_URI), ghostlib.InitPostData(post_arg))
 	defer resp.Body.Close()
+
 	data, err := ioutil.ReadAll(resp.Body)
 	if nil != err {
 		panic(err)
@@ -140,22 +121,14 @@ func (this *AiFace) FaceMatch(imgbytes... []byte) (map[string]interface{}) {
  * 黄反识别
  */
 func (this *AiFace) AntiPorn(imgbytes []byte) (map[string]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	post_arg := map[string]interface{}{
 		"image": base64.StdEncoding.EncodeToString(imgbytes),
 	}
 
-	real_uri := fmt.Sprintf("%s?access_token=%s", ANTIPORN_API_URI, this.access_token)
+	real_uri := this.getInterFaceUri(ANTIPORN_API_URI)
 	resp, _ := this.client.PostForm(real_uri, ghostlib.InitPostData(post_arg))
-
 	defer resp.Body.Close()
+
 	data, err := ioutil.ReadAll(resp.Body)
 	if nil != err {
 		panic(err)
