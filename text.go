@@ -3,7 +3,6 @@ package baiduai
 import (
 	"time"
 	"ghostlib"
-	"fmt"
 	"io/ioutil"
 )
 
@@ -103,14 +102,6 @@ func NewText() *AiText {
  * 评论观点抽取 或 情感识别  垃圾 很容易没结果
  */
 func (this *AiText) GetCommentTag(intxt string) ([]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	post_arg := map[string]interface{}{
 		"comment":  ghostlib.UrlEncode(ghostlib.ConvertStrEncode(intxt, "utf-8", "gbk")),
 		"type":  "4",	// 类别
@@ -121,8 +112,7 @@ func (this *AiText) GetCommentTag(intxt string) ([]interface{}) {
 		panic(err)
 	}
 
-	real_uri := fmt.Sprintf("%s?access_token=%s", COMTAG_API_URI, this.access_token)
-
+	real_uri := this.getInterFaceUri(COMTAG_API_URI)
 	req, err := http.NewRequest("POST", real_uri, bytes.NewReader(post_json))
 	resp, _ := this.client.Do(req)
 
@@ -149,17 +139,21 @@ func (this *AiText) GetCommentTag(intxt string) ([]interface{}) {
 }
 
 /**
+ * 获取中文词性说明
+ */
+func (this *AiText) GetWordKind(intype string) (string){
+	out_type, ok := this.WordKindMap[intype]
+	if ok {
+		return out_type
+	}
+	return ""
+}
+
+
+/**
  * 分词
  */
 func (this *AiText) SplitWords(intxt string) (map[string]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	post_arg := map[string]interface{}{
 		"query":  ghostlib.UrlEncode(ghostlib.ConvertStrEncode(intxt, "utf-8", "gbk")),
 	}
@@ -168,8 +162,7 @@ func (this *AiText) SplitWords(intxt string) (map[string]interface{}) {
 		panic(err)
 	}
 
-	real_uri := fmt.Sprintf("%s?access_token=%s", SEG_API_URI, this.access_token)
-
+	real_uri := this.getInterFaceUri(SEG_API_URI)
 	req, err := http.NewRequest("POST", real_uri, bytes.NewReader(post_json))
 	resp, _ := this.client.Do(req)
 
@@ -208,14 +201,6 @@ func (this *AiText) SplitWords(intxt string) (map[string]interface{}) {
  * 词性标注
  */
 func (this *AiText) WordPos(intxt string) ([]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	post_arg := map[string]interface{}{
 		"query":  ghostlib.UrlEncode(ghostlib.ConvertStrEncode(intxt, "utf-8", "gbk")),
 	}
@@ -224,7 +209,7 @@ func (this *AiText) WordPos(intxt string) ([]interface{}) {
 		panic(err)
 	}
 
-	real_uri := fmt.Sprintf("%s?access_token=%s", WORDPOS_API_URI, this.access_token)
+	real_uri := this.getInterFaceUri(WORDPOS_API_URI)
 	req, err := http.NewRequest("POST", real_uri, bytes.NewReader(post_json))
 	resp, _ := this.client.Do(req)
 
