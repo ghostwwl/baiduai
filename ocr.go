@@ -3,7 +3,6 @@ package baiduai
 import (
 	"net/http"
 	"time"
-	"fmt"
 	"encoding/json"
 	"io/ioutil"
 	"ghostlib"
@@ -58,14 +57,6 @@ func NewOcr() *AiOcr {
  * 身份证识别
  */
 func (this *AiOcr) OcrIdCard(imgbytes []byte, isFront bool) (map[string]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	post_arg := map[string]interface{}{
 		"image": base64.StdEncoding.EncodeToString(imgbytes),
 		"id_card_side": "front",	// front 正面  back 背面
@@ -75,10 +66,10 @@ func (this *AiOcr) OcrIdCard(imgbytes []byte, isFront bool) (map[string]interfac
 		post_arg["id_card_side"] = "back"
 	}
 
-	real_uri := fmt.Sprintf("%s?access_token=%s", IDCARD_API_URI, this.access_token)
+	real_uri := this.getInterFaceUri(IDCARD_API_URI)
 	resp, _ := this.client.PostForm(real_uri, ghostlib.InitPostData(post_arg))
-
 	defer resp.Body.Close()
+
 	data, err := ioutil.ReadAll(resp.Body)
 	if nil != err {
 		panic(err)
@@ -98,21 +89,14 @@ func (this *AiOcr) OcrIdCard(imgbytes []byte, isFront bool) (map[string]interfac
  * 身份证识别
  */
 func (this *AiOcr) OcrBankCard(imgbytes []byte) (map[string]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	post_arg := map[string]interface{}{
 		"image": base64.StdEncoding.EncodeToString(imgbytes),
 	}
-	real_uri := fmt.Sprintf("%s?access_token=%s", BANKCARD_API_URI, this.access_token)
-	resp, _ := this.client.PostForm(real_uri, ghostlib.InitPostData(post_arg))
 
+	real_uri := this.getInterFaceUri(BANKCARD_API_URI)
+	resp, _ := this.client.PostForm(real_uri, ghostlib.InitPostData(post_arg))
 	defer resp.Body.Close()
+
 	data, err := ioutil.ReadAll(resp.Body)
 	if nil != err {
 		panic(err)
@@ -132,14 +116,6 @@ func (this *AiOcr) OcrBankCard(imgbytes []byte) (map[string]interface{}) {
  * 通用ocr识别
  */
 func (this *AiOcr) OcrGeneral(imgbytes []byte) (map[string]interface{}) {
-	// 真实使用时这里要判断过期时间 避免重复获取token
-	if this.access_token == "" {
-		doflag, _ := this.getToken()
-		if !doflag {
-			panic("获取access token 失败")
-		}
-	}
-
 	post_arg := map[string]interface{}{
 		"image": base64.StdEncoding.EncodeToString(imgbytes),
 		"recognize_granularity": "big",	// 是否定位单字符位置，big：不定位单字符位置，默认值；small：定位单字符位置
@@ -151,7 +127,7 @@ func (this *AiOcr) OcrGeneral(imgbytes []byte) (map[string]interface{}) {
 		"vertexes_location" : "false", //是否返回文字外接多边形顶点位置
 	}
 
-	real_uri := fmt.Sprintf("%s?access_token=%s", GENERALOCR_API_URI, this.access_token)
+	real_uri := this.getInterFaceUri(GENERALOCR_API_URI)
 	resp, _ := this.client.PostForm(real_uri, ghostlib.InitPostData(post_arg))
 
 	defer resp.Body.Close()
