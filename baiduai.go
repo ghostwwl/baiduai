@@ -51,6 +51,18 @@ type AiClient struct {
 	type_code map[float64]string
 }
 
+func (this *AiClient) getInterFaceUri(baseuri string) string {
+	// 真实使用时这里要判断过期时间 避免重复获取token
+	if this.access_token == "" {
+		doflag, _ := this.getToken()
+		if !doflag {
+			panic("获取access token 失败")
+		}
+	}
+
+	return fmt.Sprintf("%s?access_token=%s", baseuri, this.access_token)
+}
+
 func (this *AiClient) getToken() (bool, string) {
 	post_arg := map[string]interface{}{
 		"client_id":     BAIDU_AI_KEY,
