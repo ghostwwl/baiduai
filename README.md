@@ -136,6 +136,33 @@ func test_wordpos(){
 }
 
 /**
+ * dnn中文语言模型
+ */
+func test_dnnlm(){
+	T := `
+王辉。中国美术家协会会员。1980年生于湖北。2003年毕业于湖北美术学院。
+中国画专业。学士学位。2006年毕业于广西艺术学院。中国画专业。硕士学位。
+现任职于四川绵阳师范学院美术学院。中国画教师。作品多次入选全国性学术展览并获奖。
+	`
+	engine := baiduai.NewText()
+	x := engine.DnnLm(T)
+	fmt.Printf("%v", x)
+}
+
+
+
+/**
+ * 短文本相似度
+ */
+func test_simnet(){
+	a := "我是你爸爸"
+	b := "你是我爸爸也不行"
+	engine := baiduai.NewText()
+	x := engine.SimNet(a, b)
+	fmt.Printf("%v", x)
+}
+
+/**
  * 身份证识别
  */
 func test_ocridcard(){
@@ -273,6 +300,8 @@ func main(){
 	//test_ctag()
 	//test_splitword()
 	//test_wordpos()
+	//test_dnnlm()
+	//test_simnet()
 
 	//test_ocridcard()
 	//test_ocrbankcard()
