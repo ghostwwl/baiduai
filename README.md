@@ -5,10 +5,11 @@
 - ghostlib 库看 https://github.com/ghostwwl/go-code/blob/master/ghostlib.go 呢 
 - 代码里我的app_key 和 app_cret 别用的毕竟免费有限制 
 - go没咋学 边看手册边写 有不对的 请直接邮件 
+- 文本这一块建议使用: https://github.com/ghostwwl/machine_learning/blob/master/ltp.py
 
 ### 使用说明呢:
 
-```
+```Go
 package main
 
 
